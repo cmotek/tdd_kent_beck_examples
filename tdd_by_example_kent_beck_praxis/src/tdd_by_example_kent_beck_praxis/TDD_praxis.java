@@ -5,10 +5,20 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class TDD_praxis {
-		
-		class Dollar {
+	
+		class Money {
+			protected int amount;
 			
-		private int amount;
+			public boolean equals(Object object) {
+				Money money= (Money) object;
+				return amount == money.amount;
+			}
+			
+		}
+		
+		class Dollar extends Money {
+			
+		
 			
 		Dollar(int amount){
 			this.amount= amount;
@@ -20,12 +30,27 @@ public class TDD_praxis {
 
 		}
 		
-		public boolean equals(Object object) {
-			Dollar dollar= (Dollar) object;
-			return amount == dollar.amount;
+
 		}
 		
-		}
+		class Franc extends Money {
+				
+		Franc(int amount){
+			this.amount= amount;
+			}
+			
+			
+		Franc times(int multiplier) {
+			return new Franc(amount * multiplier);
+
+			}
+			
+		public boolean equals(Object object) {
+			Money money= (Money) object;
+			return amount == money.amount;
+			}
+			
+			}
 		
 		@Test
 		public void testMultiplication() {
@@ -38,6 +63,17 @@ public class TDD_praxis {
 		public void testEquality() {
 			assertTrue(new Dollar(5).equals(new Dollar(5)));
 			assertFalse(new Dollar(5).equals(new Dollar(6)));
+			assertTrue(new Franc(5).equals(new Franc(5)));
+			assertFalse(new Franc(5).equals(new Franc(6)));
 		}
+		
+		@Test
+		public void testFrancMultiplication() {
+			Franc five= new Franc(5);
+			assertEquals(new Franc(10), five.times(2));
+			assertEquals(new Franc(15), five.times(3));
+			
+			}
+		
 		
 }
